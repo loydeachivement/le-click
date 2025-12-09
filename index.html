@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -6,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Click - Transfert d'argent rapide et sûr en Afrique</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Intégration de EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        // Initialisation d'EmailJS avec votre User ID
+        (function() {
+            emailjs.init("Vbd7HKzledK-duIkJ");
+        })();
+    </script>
     <style>
         /* Variables CSS */
         :root {
@@ -14,6 +21,7 @@
             --light-color: #f8f9fa;
             --dark-color: #333;
             --success-color: #28a745;
+            --error-color: #dc3545;
             --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
@@ -60,8 +68,8 @@
         }
 
         .logo img {
-            max-height: 90px;
-            margin-right: 30px;
+            max-height: 60px;
+            margin-right: 10px;
         }
 
         .logo-text {
@@ -312,6 +320,13 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .contact-form h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
         }
 
         .form-group {
@@ -333,6 +348,14 @@
             border-radius: 5px;
             font-family: inherit;
             font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
         }
 
         .form-group textarea {
@@ -349,12 +372,104 @@
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
             width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .submit-btn:hover {
             background-color: #003580;
+        }
+
+        .submit-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        /* Messages de statut */
+        .form-message {
+            padding: 12px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+            font-weight: 500;
+        }
+
+        .form-message.success {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            display: block;
+        }
+
+        .form-message.error {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--error-color);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            display: block;
+        }
+
+        .form-message.info {
+            background-color: rgba(0, 71, 171, 0.1);
+            color: var(--primary-color);
+            border: 1px solid rgba(0, 71, 171, 0.3);
+            display: block;
+        }
+
+        /* Loader pour le bouton d'envoi */
+        .loader {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Instructions de configuration */
+        .config-note {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--secondary-color);
+            color: #333;
+            padding: 15px;
+            border-radius: 5px;
+            max-width: 300px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-size: 14px;
+            display: none;
+        }
+
+        .config-note.show {
+            display: block;
+        }
+
+        .config-note h4 {
+            margin-bottom: 8px;
+            color: var(--primary-color);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #333;
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: bold;
         }
 
         /* Footer */
@@ -488,6 +603,13 @@
             .hero p {
                 font-size: 1rem;
             }
+            
+            .config-note {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
         }
 
         @media (max-width: 576px) {
@@ -514,7 +636,6 @@
     <header>
         <div class="container header-container">
             <div class="logo">
-                <!-- Logo à remplacer par votre image -->
                 <div class="logo-placeholder">
                     <img src="logo.png" alt="Le Click Logo">
                 </div>
@@ -664,6 +785,22 @@
                         <div class="country-status development">En développement</div>
                     </div>
                 </div>
+                
+                <div class="country-card">
+                    <img src="https://flagcdn.com/w320/ml.png" alt="Mali" class="country-flag">
+                    <div>
+                        <div class="country-name">Mali</div>
+                        <div class="country-status development">En développement</div>
+                    </div>
+                </div>
+                
+                <div class="country-card">
+                    <img src="https://flagcdn.com/w320/ne.png" alt="Niger" class="country-flag">
+                    <div>
+                        <div class="country-name">Niger</div>
+                        <div class="country-status development">En développement</div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -695,8 +832,7 @@
                             <div class="phone-country">Ghana</div>
                         </div>
                     </div>
-
-                 
+                    
                     <div class="phone-item">
                         <div class="phone-icon">
                             <i class="fas fa-clock"></i>
@@ -710,14 +846,18 @@
                 
                 <div class="contact-form">
                     <h3>Demande d'information</h3>
-                    <form id="contactForm" action="submit_form.php" method="POST">
+                    
+                    <!-- Message de statut -->
+                    <div id="formMessage" class="form-message"></div>
+                    
+                    <form id="contactForm">
                         <div class="form-group">
-                            <label for="name">Nom complet</label>
+                            <label for="name">Nom complet *</label>
                             <input type="text" id="name" name="name" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="email">Adresse email</label>
+                            <label for="email">Adresse email *</label>
                             <input type="email" id="email" name="email" required>
                         </div>
                         
@@ -741,13 +881,19 @@
                                 <option value="autre">Autre</option>
                             </select>
                         </div>
-
-<div class="form-group">
+                        
+                        <div class="form-group">
                             <label for="message">Message</label>
                             <textarea id="message" name="message" placeholder="Décrivez votre demande..."></textarea>
                         </div>
                         
-                        <button type="submit" class="submit-btn">Envoyer la demande</button>
+                        <!-- Champ caché pour suivre l'origine du formulaire -->
+                        <input type="hidden" name="source" value="Site Web Le Click">
+                        
+                        <button type="submit" id="submitBtn" class="submit-btn">
+                            <span id="submitText">Envoyer la demande</span>
+                            <span id="submitLoader" class="loader" style="display: none;"></span>
+                        </button>
                     </form>
                 </div>
             </div>
@@ -788,19 +934,50 @@
                     <h4>Contact</h4>
                     <p><i class="fas fa-phone-alt" style="margin-right: 10px;"></i> +241 77 057 911</p>
                     <p><i class="fas fa-phone-alt" style="margin-right: 10px;"></i> +233 23 716 5027</p>
-                    <p><i class="fas fa-envelope" style="margin-right: 10px;"></i> info@leclick-transfer.com</p>
-                    <p><i class="fas fa-globe" style="margin-right: 10px;"></i> www.leclick-transfer.com</p>
+                    <p><i class="fas fa-envelope" style="margin-right: 10px;"></i> leclick018@gmail.com</p>
+                    <p><i class="fas fa-globe" style="margin-right: 10px;"></i> leclick.netlify.app</p>
                 </div>
             </div>
-
-         <div class="copyright">
+            
+            <div class="copyright">
                 <p>&copy; 2023 Le Click - Transfert d'argent. Tous droits réservés.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Note de configuration 
+    <div class="config-note" id="configNote">
+        <button class="close-btn" onclick="closeConfigNote()">×</button>
+        <h4>✅ EmailJS Configuré avec Succès!</h4>
+        <p>Votre formulaire de contact est maintenant fonctionnel avec:</p>
+        <ul style="margin: 10px 0 10px 15px;">
+            <li>User ID: Vbd7HKzledK-duIkJ</li>
+            <li>Service ID: service_0ulnbpg</li>
+            <li>Template ID: template_1xhyctn</li>
+        </ul>
+        <p>Les messages seront envoyés à l'email configuré dans votre compte EmailJS.</p>
+    </div>
+    -->
+
     <!-- JavaScript pour l'interactivité -->
     <script>
+        // Afficher la note de configuration
+        function showConfigNote() {
+            const note = document.getElementById('configNote');
+            note.classList.add('show');
+            
+            // Masquer après 10 secondes
+            setTimeout(() => {
+                closeConfigNote();
+            }, 10000);
+        }
+        
+        // Fermer la note de configuration
+        function closeConfigNote() {
+            const note = document.getElementById('configNote');
+            note.classList.remove('show');
+        }
+        
         // Menu mobile
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
@@ -828,25 +1005,102 @@
             });
         });
         
-        // Gestion du formulaire de contact
+        // Gestion du formulaire de contact avec EmailJS
         const contactForm = document.getElementById('contactForm');
+        const formMessage = document.getElementById('formMessage');
+        const submitBtn = document.getElementById('submitBtn');
+        const submitText = document.getElementById('submitText');
+        const submitLoader = document.getElementById('submitLoader');
+        
         if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
+            contactForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 
-                // Validation simple
-                const name = document.getElementById('name').value;
-                const email = document.getElementById('email').value;
+                // Validation
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
                 
                 if (!name || !email) {
-                    alert('Veuillez remplir les champs obligatoires (nom et email).');
+                    showMessage('Veuillez remplir les champs obligatoires (nom et email).', 'error');
                     return;
                 }
-                    // Envoi du formulaire (à remplacer par l'envoi réel en PHP)
-                // Ici, on simule juste l'envoi
-                alert('Merci pour votre demande, ' + name + '! Nous vous contacterons bientôt à l\'adresse ' + email + '.');
-                contactForm.reset();
+                
+                // Validation d'email simple
+                if (!validateEmail(email)) {
+                    showMessage('Veuillez entrer une adresse email valide.', 'error');
+                    return;
+                }
+                
+                // Désactiver le bouton et afficher le loader
+                submitBtn.disabled = true;
+                submitText.textContent = 'Envoi en cours...';
+                submitLoader.style.display = 'inline-block';
+                
+                // Récupérer les données du formulaire
+                const formData = {
+                    from_name: name,
+                    from_email: email,
+                    phone: document.getElementById('phone').value.trim() || 'Non spécifié',
+                    country: document.getElementById('country').value || 'Non spécifié',
+                    message: document.getElementById('message').value.trim() || 'Aucun message',
+                    source: 'Site Web Le Click',
+                    date: new Date().toLocaleString('fr-FR')
+                };
+                
+                try {
+                    console.log('Envoi du formulaire avec EmailJS...', formData);
+                    
+                    // Envoyer l'email via EmailJS
+                    const response = await emailjs.send(
+                        'service_0ulnbpg', // Service ID
+                        'template_1xhyctn', // Template ID
+                        formData
+                    );
+                    
+                    console.log('Réponse EmailJS:', response);
+                    
+                    if (response.status === 200) {
+                        // Succès
+                        showMessage(`✅ Merci ${name}! Votre demande a été envoyée avec succès. Nous vous contacterons bientôt à ${email}.`, 'success');
+                        contactForm.reset();
+                        
+                        // Afficher la note de configuration
+                        showConfigNote();
+                    } else {
+                        throw new Error('Erreur lors de l\'envoi');
+                    }
+                } catch (error) {
+                    console.error('Erreur EmailJS:', error);
+                    showMessage('❌ Une erreur est survenue lors de l\'envoi de votre message. Veuillez réessayer plus tard ou nous contacter par téléphone.', 'error');
+                    
+                    // Afficher les détails de l'erreur dans la console
+                    if (error.text) {
+                        console.error('Détails de l\'erreur:', error.text);
+                    }
+                } finally {
+                    // Réactiver le bouton
+                    submitBtn.disabled = false;
+                    submitText.textContent = 'Envoyer la demande';
+                    submitLoader.style.display = 'none';
+                }
             });
+        }
+        
+        // Fonction pour valider l'email
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        // Fonction pour afficher les messages
+        function showMessage(text, type) {
+            formMessage.textContent = text;
+            formMessage.className = 'form-message ' + type;
+            
+            // Masquer le message après 10 secondes
+            setTimeout(() => {
+                formMessage.className = 'form-message';
+            }, 10000);
         }
         
         // Smooth scroll pour les ancres
@@ -865,6 +1119,14 @@
                     });
                 }
             });
+        });
+        
+        // Vérifier que EmailJS est initialisé
+        window.addEventListener('load', function() {
+            console.log('EmailJS initialisé avec User ID:', emailjs.init.toString().match(/init\("([^"]+)"\)/)[1]);
+            
+            // Afficher la note de configuration après le chargement
+            setTimeout(showConfigNote, 1000);
         });
     </script>
 </body>
