@@ -1,0 +1,871 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Click - Transfert d'argent rapide et sûr en Afrique</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables CSS */
+        :root {
+            --primary-color: #0047ab;
+            --secondary-color: #f9a826;
+            --light-color: #f8f9fa;
+            --dark-color: #333;
+            --success-color: #28a745;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Reset et styles de base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header et Navigation */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            max-height: 90px;
+            margin-right: 30px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text .main-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .logo-text .tagline {
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1rem;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 71, 171, 0.85), rgba(0, 71, 171, 0.9)), url('https://images.unsplash.com/photo-1529074963764-98f45c47344b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            background-color: #e89700;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Services Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+            font-size: 2.2rem;
+        }
+
+        .services {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        /* Countries Section */
+        .countries {
+            padding: 80px 0;
+            background-color: #f0f5ff;
+        }
+
+        .countries-description {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-size: 1.1rem;
+        }
+
+        .countries-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .country-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .country-card:hover {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .country-flag {
+            width: 50px;
+            height: 35px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .country-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .country-status {
+            margin-top: 5px;
+            font-size: 0.9rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .active {
+            background-color: rgba(40, 167, 69, 0.15);
+            color: var(--success-color);
+        }
+
+        .development {
+            background-color: rgba(255, 193, 7, 0.15);
+            color: #ffc107;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            align-items: center;
+        }
+
+        .phone-numbers {
+            background-color: var(--light-color);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .phone-numbers h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .phone-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .phone-icon {
+            background-color: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .contact-form {
+            background-color: var(--light-color);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background-color: #003580;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-logo {
+            max-height: 70px;
+            margin-bottom: 15px;
+        }
+
+        .footer-about p {
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h4,
+        .footer-contact h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                margin-bottom: 15px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav li {
+                margin: 10px 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                top: 25px;
+                right: 20px;
+            }
+
+            .mobile-menu {
+                display: none;
+            }
+
+            .mobile-menu.active {
+                display: block;
+                width: 100%;
+                text-align: center;
+                margin-top: 15px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 60px 0;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .service-card, .contact-form, .phone-numbers {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <!-- Logo à remplacer par votre image -->
+                <div class="logo-placeholder">
+                    <img src="logo.png" alt="Le Click Logo">
+                </div>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="mobile-menu" id="mobileMenu">
+                <ul>
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#pays">Pays desservis</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <div class="container">
+            <h1>Transfert d'argent rapide et sûr en Afrique</h1>
+            <p>Envoyez de l'argent en toute sécurité vers le Gabon, Congo, Bénin, Ghana, Togo, Côte d'Ivoire, Sénégal, Cameroun et d'autres pays en développement. Rapidité, fiabilité et frais compétitifs.</p>
+            <a href="#contact" class="cta-button">Envoyer de l'argent maintenant</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Nos Services</h2>
+            <div class="services-container">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Transfert Rapide</h3>
+                    <p>Votre argent arrive en quelques minutes seulement. Notre réseau garantit des transferts ultra-rapides vers toutes nos destinations.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Sécurité Maximale</h3>
+                    <p>Vos transactions sont protégées par les dernières technologies de cryptage. Votre argent est en sécurité avec nous.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-percent"></i>
+                    </div>
+                    <h3>Frais Compétitifs</h3>
+                    <p>Des frais de transfert parmi les plus bas du marché. Plus vous envoyez, moins vous payez.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Countries Section -->
+    <section class="countries" id="pays">
+        <div class="container">
+            <h2 class="section-title">Pays Desservis</h2>
+            <p class="countries-description">Nous offrons des services de transfert d'argent vers plusieurs pays d'Afrique centrale et de l'ouest, avec une expansion continue vers d'autres destinations.</p>
+            
+            <div class="countries-container">
+                <!-- Pays actifs -->
+                <div class="country-card">
+                    <img src="https://flagcdn.com/w320/ga.png" alt="Gabon" class="country-flag">
+                    <div>
+                        <div class="country-name">Gabon</div>
+                        <div class="country-status active">Service actif</div>
+                    </div>
+                </div>
+                
+                <div class="country-card">
+                    <img src="https://flagcdn.com/w320/cg.png" alt="Congo" class="country-flag">
+                    <div>
+                        <div class="country-name">Congo</div>
+                        <div class="country-status active">Service actif</div>
+                    </div>
+                </div>
+                
+                <div class="country-card">
+                    <img src="https://flagcdn.com/w320/bj.png" alt="Bénin" class="country-flag">
+                    <div>
+                        <div class="country-name">Bénin</div>
+                        <div class="country-status active">Service actif</div>
+                    </div>
+                </div>
+                
+                <div class="country-card">
+                    <img src="https://flagcdn.com/w320/gh.png" alt="Ghana" class="country-flag">
+                    <div>
+                        <div class="country-name">Ghana</div>
+                        <div class="country-status active">Service actif</div>
+                    </div>
+                </div>
+                
+                <div class="country-card">
+                    <img src="https://flagcdn.com/w320/tg.png" alt="Togo" class="country-flag">
+                    <div>
+                        <div class="country-name">Togo</div>
+                        <div class="country-status active">Service actif</div>
+                    </div>
+                </div>
+                
+                <div class="country-card">
+                    <img src="https://flagcdn.com/w320/ci.png" alt="Côte d'Ivoire" class="country-flag">
+                    <div>
+                        <div class="country-name">Côte d'Ivoire</div>
+                        <div class="country-status active">Service actif</div>
+                    </div>
+                </div>
+                
+                <div class="country-card">
+                    <img src="https://flagcdn.com/w320/sn.png" alt="Sénégal" class="country-flag">
+                    <div>
+                        <div class="country-name">Sénégal</div>
+                        <div class="country-status active">Service actif</div>
+                    </div>
+                </div>
+                
+                <div class="country-card">
+                    <img src="https://flagcdn.com/w320/cm.png" alt="Cameroun" class="country-flag">
+                    <div>
+                        <div class="country-name">Cameroun</div>
+                        <div class="country-status active">Service actif</div>
+                    </div>
+                </div>
+                
+                <!-- Pays en développement -->
+                <div class="country-card">
+                    <img src="https://flagcdn.com/w320/ng.png" alt="Nigéria" class="country-flag">
+                    <div>
+                        <div class="country-name">Nigéria</div>
+                        <div class="country-status development">En développement</div>
+                    </div>
+                </div>
+                
+                <div class="country-card">
+                    <img src="https://flagcdn.com/w320/gn.png" alt="Guinée" class="country-flag">
+                    <div>
+                        <div class="country-name">Guinée</div>
+                        <div class="country-status development">En développement</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contactez-nous</h2>
+            <div class="contact-container">
+                <div class="phone-numbers">
+                    <h3>Nos numéros de téléphone</h3>
+                    
+                    <div class="phone-item">
+                        <div class="phone-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <div class="phone-number">+241 77 057 911</div>
+                            <div class="phone-country">Gabon</div>
+                        </div>
+                    </div>
+                    
+                    <div class="phone-item">
+                        <div class="phone-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div>
+                            <div class="phone-number">+233 23 716 5027</div>
+                            <div class="phone-country">Ghana</div>
+                        </div>
+                    </div>
+
+                 
+                    <div class="phone-item">
+                        <div class="phone-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <div class="phone-number">24h/24 et 7j/7</div>
+                            <div class="phone-country">Service client</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Demande d'information</h3>
+                    <form id="contactForm" action="submit_form.php" method="POST">
+                        <div class="form-group">
+                            <label for="name">Nom complet</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Adresse email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Numéro de téléphone</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="country">Pays de destination</label>
+                            <select id="country" name="country">
+                                <option value="">Sélectionnez un pays</option>
+                                <option value="Gabon">Gabon</option>
+                                <option value="Congo">Congo</option>
+                                <option value="Bénin">Bénin</option>
+                                <option value="Ghana">Ghana</option>
+                                <option value="Togo">Togo</option>
+                                <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                                <option value="Sénégal">Sénégal</option>
+                                <option value="Cameroun">Cameroun</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+
+<div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Décrivez votre demande..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Envoyer la demande</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-about">
+                    <div class="logo-text">
+                        <div class="main-title" style="color: white; font-size: 2rem;">Le Click</div>
+                        <div class="tagline" style="color: var(--secondary-color);">Rapid & Sure</div>
+                    </div>
+                    <p>Le Click est votre partenaire de confiance pour les transferts d'argent en Afrique centrale et de l'ouest. Rapidité, sécurité et service client exceptionnel.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Liens rapides</h4>
+                    <ul>
+                        <li><a href="#accueil">Accueil</a></li>
+                        <li><a href="#services">Nos services</a></li>
+                        <li><a href="#pays">Pays desservis</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#">Conditions d'utilisation</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-phone-alt" style="margin-right: 10px;"></i> +241 77 057 911</p>
+                    <p><i class="fas fa-phone-alt" style="margin-right: 10px;"></i> +233 23 716 5027</p>
+                    <p><i class="fas fa-envelope" style="margin-right: 10px;"></i> info@leclick-transfer.com</p>
+                    <p><i class="fas fa-globe" style="margin-right: 10px;"></i> www.leclick-transfer.com</p>
+                </div>
+            </div>
+
+         <div class="copyright">
+                <p>&copy; 2023 Le Click - Transfert d'argent. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript pour l'interactivité -->
+    <script>
+        // Menu mobile
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mobileMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Fermer le menu mobile en cliquant sur un lien
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+        
+        // Gestion du formulaire de contact
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validation simple
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                
+                if (!name || !email) {
+                    alert('Veuillez remplir les champs obligatoires (nom et email).');
+                    return;
+                }
+                    // Envoi du formulaire (à remplacer par l'envoi réel en PHP)
+                // Ici, on simule juste l'envoi
+                alert('Merci pour votre demande, ' + name + '! Nous vous contacterons bientôt à l\'adresse ' + email + '.');
+                contactForm.reset();
+            });
+        }
+        
+        // Smooth scroll pour les ancres
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
