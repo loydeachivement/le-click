@@ -343,6 +343,31 @@
             margin-right: 15px;
         }
 
+        /* Style pour les liens WhatsApp */
+        .whatsapp-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s;
+        }
+
+        .whatsapp-link:hover {
+            transform: translateX(5px);
+        }
+
+        .whatsapp-icon {
+            background-color: #25D366; /* Couleur WhatsApp */
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
         .contact-form {
             background-color: var(--light-color);
             padding: 30px;
@@ -696,7 +721,7 @@
             </nav>
             
             <!-- Image de la calculatrice (visible sur desktop) -->
-            <img class="cal" src="cal.png" alt="ghanaFlag" onclick="window.location.href='calculRate.html'">
+            <img class="cal" src="cal.png" alt="calculatrice" onclick="window.location.href='calculRate.html'">
             
             <!-- Icône de calculatrice pour mobile -->
             <i class="fas fa-calculator cal-icon" onclick="window.location.href='calculRate.html'"></i>
@@ -860,25 +885,27 @@
                 <div class="phone-numbers">
                     <h3>Nos numéros de téléphone</h3>
                     
-                    <div class="phone-item">
-                        <div class="phone-icon">
-                            <i class="fas fa-phone-alt"></i>
+                    <!-- Numéro WhatsApp pour le Gabon -->
+                    <a href="https://wa.me/24177057911" class="whatsapp-link" target="_blank">
+                        <div class="whatsapp-icon">
+                            <i class="fab fa-whatsapp"></i>
                         </div>
                         <div>
                             <div class="phone-number">+241 77 057 911</div>
                             <div class="phone-country">Gabon</div>
                         </div>
-                    </div>
+                    </a>
                     
-                    <div class="phone-item">
-                        <div class="phone-icon">
-                            <i class="fas fa-phone-alt"></i>
+                    <!-- Numéro WhatsApp pour le Ghana -->
+                    <a href="https://wa.me/233237165027" class="whatsapp-link" target="_blank">
+                        <div class="whatsapp-icon">
+                            <i class="fab fa-whatsapp"></i>
                         </div>
                         <div>
                             <div class="phone-number">+233 23 716 5027</div>
                             <div class="phone-country">Ghana</div>
                         </div>
-                    </div>
+                    </a>
                     
                     <div class="phone-item">
                         <div class="phone-icon">
@@ -958,7 +985,10 @@
                     </div>
                     <p>Le Click est votre partenaire de confiance pour les transferts d'argent en Afrique centrale et de l'ouest. Rapidité, sécurité et service client exceptionnel.</p>
                     <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <!-- Lien Facebook avec l'URL spécifiée -->
+                        <a href="https://www.facebook.com/share/1Bn7HRKiz1/" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-instagram"></i></a>
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
