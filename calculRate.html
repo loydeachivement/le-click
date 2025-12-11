@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur de Transfert d'Argent</title>
+    <style>
+        /* Style général du corps de la page */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        /* Conteneur principal de l'application */
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 550px;
+            text-align: center; /* Pour centrer le logo */
+        }
+        
+        /* Style pour le logo */
+        .logo {
+            max-width: 130px; /* Taille du logo */
+            height: auto;
+            margin-bottom: 2px; /* Espace sous le logo */
+        }
+
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .container > p {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+
+        /* Groupes de formulaire pour l'espacement */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #34495e;
+            font-weight: 600;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            box-sizing: border-box; /* Important pour que le padding n'affecte pas la largeur */
+            font-size: 16px;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Section des résultats */
+        #resultats {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+            display: none; /* Caché par défaut */
+        }
+
+        #resultats h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .result-item {
+            display: flex;
+            flex-direction: column;
+            padding: 15px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-item .label {
+            font-weight: 500;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+
+        .result-item .value-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-item .value {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+
+        .result-item .currency {
+            color: #7f8c8d;
+            margin-left: 5px;
+            font-size: 0.9em;
+        }
+
+        /* Style pour le résultat final */
+        .result-item.final {
+            background-color: #eafaf1;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-bottom: none;
+        }
+
+        .result-item.final .label {
+            font-size: 1.1em;
+        }
+
+        .result-item.final .value {
+            font-size: 1.4em;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- AJOUT DU LOGO -->
+        <!-- Vous pouvez remplacer cette URL par l'URL de votre propre logo -->
+        <img src="logo.png" alt="Logo le click" class="logo">
+
+        <h3>Calculateur de Transfert Ghana - Gabon</h3>
+        <p>Cet outil calcule les frais de transfert et le montant final à recevoir.</p>
+        
+        <form id="transferForm">
+            <div class="form-group">
+                <label for="montant">Montant à envoyer (XAF):</label>
+                <input type="number" id="montant" placeholder="Ex: 100000" required>
+            </div>
+
+            <div class="form-group">
+                <label for="taux">Taux du Ghana Cedis (GHS) pour 10 000 XAF:</label>
+                <input type="number" id="taux" step="0.01" placeholder="Ex: 15.50" required>
+            </div>
+
+            <button type="submit">Calculer</button>
+        </form>
+
+        <div id="resultats">
+            <h2>Résultats du Calcul</h2>
+            
+            <!-- Premier Résultat -->
+            <div class="result-item">
+                <span class="label">Après application du pourcentage de transfert (10.5%)</span>
+                <div class="value-group">
+                    <div>
+                        <span class="value" id="resultat1Client">0.00</span>
+                        <span class="currency">XAF (Montant du client)</span>
+                    </div>
+                    <div>
+                        <span class="value" id="resultat1Frais">0.00</span>
+                        <span class="currency">XAF (Frais)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Résultat Final -->
+            <div class="result-item final">
+                <span class="label">Montant total à recevoir au Ghana</span>
+                <div class="value-group">
+                    <span class="value" id="resultatFinal">0.00</span>
+                    <span class="currency">GHS</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Attendre que le contenu de la page soit entièrement chargé
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Sélection des éléments du DOM
+            const form = document.getElementById('transferForm');
+            const montantInput = document.getElementById('montant');
+            const tauxInput = document.getElementById('taux');
+            const resultatsDiv = document.getElementById('resultats');
+            
+            const resultat1ClientSpan = document.getElementById('resultat1Client');
+            const resultat1FraisSpan = document.getElementById('resultat1Frais');
+            const resultatFinalSpan = document.getElementById('resultatFinal');
+
+            // Écouter l'événement de soumission du formulaire
+            form.addEventListener('submit', (event) => {
+                // Empêcher le rechargement de la page
+                event.preventDefault();
+
+                // 1. Récupérer et valider les valeurs d'entrée
+                const montantInitial = parseFloat(montantInput.value);
+                const tauxPour10000 = parseFloat(tauxInput.value);
+
+                if (isNaN(montantInitial) || isNaN(tauxPour10000) || montantInitial <= 0 || tauxPour10000 <= 0) {
+                    alert('Veuillez entrer des valeurs valides et positives.');
+                    return;
+                }
+
+                // 2. Effectuer les calculs
+
+                // Calcul du pourcentage de transfère (10.5%)
+                const pourcentagePrincipal = 0.105;
+                const fraisPrincipal = montantInitial * pourcentagePrincipal;
+                
+                // PREMIER RÉSULTAT : Montant du client et montant des frais
+                const montantDuClient = montantInitial - fraisPrincipal;
+                
+                // Calcul du taux pour 1 XAF
+                const tauxPar1 = tauxPour10000 / 10000;
+                
+                // RÉSULTAT FINAL : Calcul de la réception en Ghana Cedis
+                // Basé sur le montant du client
+                const montantReceptionGHS = montantDuClient * tauxPar1;
+
+                // 3. Afficher les résultats dans l'interface
+                resultat1ClientSpan.textContent = montantDuClient.toFixed(2);
+                resultat1FraisSpan.textContent = fraisPrincipal.toFixed(2);
+                resultatFinalSpan.textContent = montantReceptionGHS.toFixed(2);
+
+                // Rendre la section des résultats visible
+                resultatsDiv.style.display = 'block';
+
+                // Faire défiler la page en douceur vers les résultats
+                resultatsDiv.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
