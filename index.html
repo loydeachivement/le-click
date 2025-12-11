@@ -120,6 +120,34 @@
             cursor: pointer;
         }
 
+        /* Style pour l'image de la calculatrice */
+        .cal {
+            height: 40px; /* Réduit la hauteur */
+            width: auto;
+            margin-left: 20px; /* Ajoute un espace à gauche */
+            transition: all 0.3s ease;
+            cursor: pointer; /* Ajoute un curseur pointer pour indiquer que c'est cliquable */
+        }
+
+        .cal:hover {
+            transform: scale(1.1);
+        }
+
+        /* Icône de calculatrice pour mobile */
+        .cal-icon {
+            display: none;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-left: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cal-icon:hover {
+            color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
         /* Hero Section */
         .hero {
             background: linear-gradient(rgba(0, 71, 171, 0.85), rgba(0, 71, 171, 0.9)), url('https://images.unsplash.com/photo-1529074963764-98f45c47344b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
@@ -610,6 +638,18 @@
                 left: 10px;
                 max-width: none;
             }
+            
+            /* Cacher l'image de la calculatrice et afficher l'icône sur mobile */
+            .cal {
+                display: none;
+            }
+            
+            .cal-icon {
+                display: inline-block;
+                position: absolute;
+                top: 25px;
+                right: 60px; /* Positionné à côté du bouton menu */
+            }
         }
 
         @media (max-width: 576px) {
@@ -654,6 +694,12 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
+            
+            <!-- Image de la calculatrice (visible sur desktop) -->
+            <img class="cal" src="cal.png" alt="Calculatrice" onclick="window.location.href='calculRate.html'">
+            
+            <!-- Icône de calculatrice pour mobile -->
+            <i class="fas fa-calculator cal-icon" onclick="window.location.href='calculRate.html'"></i>
         </div>
     </header>
 
