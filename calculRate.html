@@ -332,7 +332,7 @@
             <!-- RÉSULTATS POUR AFRIQUE FRANCOPHONE -->
             <div id="francophone-resultats" class="resultats-content hidden">
                 <div class="result-item">
-                    <span class="label" id="francophone-label">Montant à recevoir après déduction des frais (9.5%)</span>
+                    <span class="label" id="francophone-label">Montant à recevoir après déduction des frais</span>
                     <div class="value-group">
                         <span class="value" id="francophone-montant">0.00</span>
                         <span class="currency">XAF</span>
@@ -347,10 +347,18 @@
                     </div>
                 </div>
                 
-                <div class="result-item final">
+                <div class="result-item">
                     <span class="label" id="francophile-final-label">Montant total envoyé</span>
                     <div class="value-group">
                         <span class="value" id="francophile-final">0.00</span>
+                        <span class="currency">XAF</span>
+                    </div>
+                </div>
+                
+                <div id="francophone-resultat-final-item" class="result-item final hidden">
+                    <span class="label">Valeur finale à recevoir (100 F ajoutés par tranche de 10 000 F)</span>
+                    <div class="value-group">
+                        <span class="value" id="francophone-valeur-finale">0.00</span>
                         <span class="currency">XAF</span>
                     </div>
                 </div>
@@ -416,6 +424,7 @@
             const montantFrancophoneLabel = document.getElementById('montantFrancophoneLabel');
             const francophileFinalLabel = document.getElementById('francophile-final-label');
             const montantFrancophoneInput = document.getElementById('montantFrancophone');
+            const valeurFinaleItem = document.getElementById('francophone-resultat-final-item');
             
             francophoneOptions.forEach(option => {
                 option.addEventListener('click', () => {
@@ -428,17 +437,19 @@
                     // Mettre à jour le label en fonction de l'option
                     const optionType = option.getAttribute('data-option');
                     if (optionType === 'envoi') {
-                        francophoneLabel.textContent = 'Montant à recevoir après déduction des frais (9.5%)';
+                        francophoneLabel.textContent = 'Montant à recevoir après déduction des frais';
                         francophoneFraisLabel.textContent = 'Frais de transfert (9.5%)';
                         montantFrancophoneLabel.textContent = 'Montant à envoyer (XAF):';
                         francophileFinalLabel.textContent = 'Montant total envoyé';
                         montantFrancophoneInput.placeholder = 'Ex: 10000';
+                        valeurFinaleItem.classList.add('hidden'); // Masquer la valeur finale
                     } else {
                         francophoneLabel.textContent = 'Montant à recevoir (valeur souhaitée)';
-                        francophoneFraisLabel.textContent = 'Frais de transfert (12% du montant à recevoir)';
+                        francophoneFraisLabel.textContent = 'Frais de transfert (12%)';
                         montantFrancophoneLabel.textContent = 'Montant à recevoir (XAF):';
                         francophileFinalLabel.textContent = 'Montant total à envoyer';
                         montantFrancophoneInput.placeholder = 'Ex: 10100';
+                        valeurFinaleItem.classList.remove('hidden'); // Afficher la valeur finale
                     }
                 });
             });
@@ -488,6 +499,7 @@
             const francophoneMontantSpan = document.getElementById('francophone-montant');
             const francophoneFraisSpan = document.getElementById('francophone-frais');
             const francophileFinalSpan = document.getElementById('francophile-final');
+            const francophoneValeurFinaleSpan = document.getElementById('francophone-valeur-finale');
             
             francophoneForm.addEventListener('submit', (event) => {
                 event.preventDefault();
@@ -518,9 +530,13 @@
                     montantEnvoyer = valeurEntree + frais;
                 }
                 
+                // Calcul de la valeur finale à recevoir (100 F ajoutés par tranche de 10 000 F)
+                const valeurFinale = montantRecevoir + (Math.floor(montantRecevoir / 10000) * 100);
+                
                 francophoneMontantSpan.textContent = montantRecevoir.toFixed(2);
                 francophoneFraisSpan.textContent = frais.toFixed(2);
                 francophileFinalSpan.textContent = montantEnvoyer.toFixed(2);
+                francophoneValeurFinaleSpan.textContent = valeurFinale.toFixed(2);
                 
                 // Afficher uniquement les résultats pour Afrique Francophone
                 resultatsContents.forEach(rc => rc.classList.add('hidden'));
