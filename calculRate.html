@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculateur de Transfert d'Argent</title>
+    <title>Calculateur de Transfert</title>
     <style>
         /* Style général du corps de la page */
         body {
@@ -13,11 +13,11 @@
             padding: 20px;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             min-height: 100vh;
         }
 
-        /* Conteneur principal de l'application */
+        /* --- Styles pour le calculateur --- */
         .container {
             background-color: #ffffff;
             padding: 30px;
@@ -25,14 +25,12 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 550px;
-            text-align: center; /* Pour centrer le logo */
         }
-        
-        /* Style pour le logo */
+
         .logo {
-            max-width: 130px; /* Taille du logo */
+            max-width: 130px;
             height: auto;
-            margin-bottom: 2px; /* Espace sous le logo */
+            margin-bottom: 2px;
         }
 
         h1 {
@@ -47,7 +45,6 @@
             margin-bottom: 30px;
         }
 
-        /* Groupes de formulaire pour l'espacement */
         .form-group {
             margin-bottom: 20px;
         }
@@ -59,16 +56,18 @@
             font-weight: 600;
         }
 
-        input[type="number"] {
+        input[type="number"],
+        select {
             width: 100%;
             padding: 12px;
             border: 1px solid #bdc3c7;
             border-radius: 5px;
-            box-sizing: border-box; /* Important pour que le padding n'affecte pas la largeur */
+            box-sizing: border-box;
             font-size: 16px;
         }
 
-        input[type="number"]:focus {
+        input[type="number"]:focus,
+        select:focus {
             outline: none;
             border-color: #3498db;
             box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
@@ -91,12 +90,11 @@
             background-color: #2980b9;
         }
 
-        /* Section des résultats */
         #resultats {
             margin-top: 30px;
             padding-top: 20px;
             border-top: 2px solid #ecf0f1;
-            display: none; /* Caché par défaut */
+            display: none;
         }
 
         #resultats h2 {
@@ -140,7 +138,6 @@
             font-size: 0.9em;
         }
 
-        /* Style pour le résultat final */
         .result-item.final {
             background-color: #eafaf1;
             padding: 20px;
@@ -157,55 +154,230 @@
             font-size: 1.4em;
             color: #27ae60;
         }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            border: 1px solid #ecf0f1;
+            border-bottom: none;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+            font-weight: 600;
+            color: #7f8c8d;
+            transition: all 0.3s ease;
+        }
+        
+        .tab:last-child {
+            margin-right: 0;
+        }
+        
+        .tab.active {
+            background-color: #ffffff;
+            color: #3498db;
+            border-color: #3498db;
+            border-bottom: 1px solid #ffffff;
+            margin-bottom: -1px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .francophone-options {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .francophone-option {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #f8f9fa;
+            border: 1px solid #ecf0f1;
+            margin-right: 5px;
+            font-weight: 600;
+            color: #7f8c8d;
+            transition: all 0.3s ease;
+        }
+        
+        .francophone-option:last-child {
+            margin-right: 0;
+        }
+        
+        .francophone-option.active {
+            background-color: #eafaf1;
+            color: #27ae60;
+            border-color: #27ae60;
+        }
+
+        /* Classe pour cacher des éléments */
+        .hidden {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- AJOUT DU LOGO -->
-        <!-- Vous pouvez remplacer cette URL par l'URL de votre propre logo -->
-        <img src="logo.png" alt="Logo le click" class="logo">
-
-        <h3>Calculateur de Transfert</h3>
+    <!-- CALCULATEUR -->
+    <div id="calculateur" class="container">
+        <center><img src="logo.png" alt="Logo le click" class="logo"></center>
+        <h1>Calculateur de Transfert</h1>
         <p>Cet outil calcule les frais de transfert et le montant final à recevoir.</p>
         
-        <form id="transferForm">
-            <div class="form-group">
-                <label for="montant">Montant à envoyer (XAF):</label>
-                <input type="number" id="montant" placeholder="Ex: 100000" required>
-            </div>
+        <!-- ONGLETS DE SÉLECTION -->
+        <div class="tabs">
+            <div class="tab active" data-tab="ghana">Ghana - Gabon</div>
+            <div class="tab" data-tab="francophone">Afrique Francophone</div>
+            <div class="tab" data-tab="reste">Reste de l'Afrique</div>
+        </div>
+        
+        <!-- CONTENU DE L'ONGLET GHANA -->
+        <div id="ghana-content" class="tab-content active">
+            <form id="transferForm">
+                <div class="form-group">
+                    <label for="montant">Montant à envoyer (XAF):</label>
+                    <input type="number" id="montant" placeholder="Ex: 100000" required>
+                </div>
 
-            <div class="form-group">
-                <label for="taux">Taux du jour pour 10 000 XAF:</label>
-                <input type="number" id="taux" step="0.01" placeholder="Ex: 15.50" required>
-            </div>
+                <div class="form-group">
+                    <label for="taux">Taux du Ghana Cedis (GHS) pour 10 000 XAF:</label>
+                    <input type="number" id="taux" step="0.01" placeholder="Ex: 15.50" required>
+                </div>
 
-            <button type="submit">Calculer</button>
-        </form>
+                <button type="submit">Calculer</button>
+            </form>
+        </div>
+        
+        <!-- CONTENU DE L'ONGLET AFRIQUE FRANCOPHONE -->
+        <div id="francophone-content" class="tab-content">
+            <div class="francophone-options">
+                <div class="francophone-option active" data-option="envoi">Envoi sans frais de réception</div>
+                <div class="francophone-option" data-option="reception">Réception avec frais</div>
+            </div>
+            
+            <form id="francophoneForm">
+                <div class="form-group">
+                    <label for="montantFrancophone" id="montantFrancophoneLabel">Montant à envoyer (XAF):</label>
+                    <input type="number" id="montantFrancophone" placeholder="Ex: 10000" required>
+                </div>
+
+                <button type="submit">Calculer</button>
+            </form>
+        </div>
+        
+        <!-- CONTENU DE L'ONGLET RESTE DE L'AFRIQUE -->
+        <div id="reste-content" class="tab-content">
+            <form id="resteForm">
+                <div class="form-group">
+                    <label for="montantReste">Montant à envoyer (XAF):</label>
+                    <input type="number" id="montantReste" placeholder="Ex: 100000" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tauxReste">Taux de change pour 10 000 XAF:</label>
+                    <input type="number" id="tauxReste" step="0.01" placeholder="Ex: 15.50" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="fraisReste">Frais de transfert (%):</label>
+                    <input type="number" id="fraisReste" step="0.01" placeholder="Ex: 10.5" required>
+                </div>
+
+                <button type="submit">Calculer</button>
+            </form>
+        </div>
 
         <div id="resultats">
             <h2>Résultats du Calcul</h2>
             
-            <!-- Premier Résultat -->
-            <div class="result-item">
-                <span class="label">Après application du pourcentage de transfert (10.5%)</span>
-                <div class="value-group">
-                    <div>
-                        <span class="value" id="resultat1Client">0.00</span>
-                        <span class="currency">XAF (Montant du client)</span>
+            <!-- RÉSULTATS POUR GHANA -->
+            <div id="ghana-resultats" class="resultats-content">
+                <div class="result-item">
+                    <span class="label">Après application du pourcentage de transfert (10.5%)</span>
+                    <div class="value-group">
+                        <div>
+                            <span class="value" id="resultat1Client">0.00</span>
+                            <span class="currency">XAF (Montant du client)</span>
+                        </div>
+                        <div>
+                            <span class="value" id="resultat1Frais">0.00</span>
+                            <span class="currency">XAF (Frais)</span>
+                        </div>
                     </div>
-                    <div>
-                        <span class="value" id="resultat1Frais">0.00</span>
-                        <span class="currency">XAF (Frais)</span>
+                </div>
+
+                <div class="result-item final">
+                    <span class="label">Montant total à recevoir au Ghana</span>
+                    <div class="value-group">
+                        <span class="value" id="resultatFinal">0.00</span>
+                        <span class="currency">GHS</span>
                     </div>
                 </div>
             </div>
+            
+            <!-- RÉSULTATS POUR AFRIQUE FRANCOPHONE -->
+            <div id="francophone-resultats" class="resultats-content hidden">
+                <div class="result-item">
+                    <span class="label" id="francophone-label">Montant à recevoir après déduction des frais (9.5%)</span>
+                    <div class="value-group">
+                        <span class="value" id="francophone-montant">0.00</span>
+                        <span class="currency">XAF</span>
+                    </div>
+                </div>
+                
+                <div class="result-item">
+                    <span class="label" id="francophone-frais-label">Frais de transfert (9.5%)</span>
+                    <div class="value-group">
+                        <span class="value" id="francophone-frais">0.00</span>
+                        <span class="currency">XAF</span>
+                    </div>
+                </div>
+                
+                <div class="result-item final">
+                    <span class="label" id="francophile-final-label">Montant total envoyé</span>
+                    <div class="value-group">
+                        <span class="value" id="francophile-final">0.00</span>
+                        <span class="currency">XAF</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RÉSULTATS POUR RESTE DE L'AFRIQUE -->
+            <div id="reste-resultats" class="resultats-content hidden">
+                <div class="result-item">
+                    <span class="label">Après application des frais de transfert</span>
+                    <div class="value-group">
+                        <div>
+                            <span class="value" id="reste-montant-client">0.00</span>
+                            <span class="currency">XAF (Montant du client)</span>
+                        </div>
+                        <div>
+                            <span class="value" id="reste-frais">0.00</span>
+                            <span class="currency">XAF (Frais)</span>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- Résultat Final -->
-            <div class="result-item final">
-                <span class="label">Montant total à recevoir</span>
-                <div class="value-group">
-                    <span class="value" id="resultatFinal">0.00</span>
+                <div class="result-item final">
+                    <span class="label">Montant total à recevoir</span>
+                    <div class="value-group">
+                        <span class="value" id="reste-final">0.00</span>
+                        <span class="currency">(Devise de destination)</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -215,7 +387,64 @@
         // Attendre que le contenu de la page soit entièrement chargé
         document.addEventListener('DOMContentLoaded', () => {
 
-            // Sélection des éléments du DOM
+            // --- LOGIQUE DES ONGLETS ---
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const resultatsContents = document.querySelectorAll('.resultats-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Désactiver tous les onglets et contenus
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(tc => tc.classList.remove('active'));
+                    resultatsContents.forEach(rc => rc.classList.add('hidden'));
+                    
+                    // Activer l'onglet cliqué
+                    tab.classList.add('active');
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-content`).classList.add('active');
+                    
+                    // Cacher les résultats
+                    document.getElementById('resultats').style.display = 'none';
+                });
+            });
+            
+            // --- LOGIQUE DES OPTIONS FRANCOPHONES ---
+            const francophoneOptions = document.querySelectorAll('.francophone-option');
+            const francophoneLabel = document.getElementById('francophone-label');
+            const francophoneFraisLabel = document.getElementById('francophone-frais-label');
+            const montantFrancophoneLabel = document.getElementById('montantFrancophoneLabel');
+            const francophileFinalLabel = document.getElementById('francophile-final-label');
+            const montantFrancophoneInput = document.getElementById('montantFrancophone');
+            
+            francophoneOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    // Désactiver toutes les options
+                    francophoneOptions.forEach(o => o.classList.remove('active'));
+                    
+                    // Activer l'option cliquée
+                    option.classList.add('active');
+                    
+                    // Mettre à jour le label en fonction de l'option
+                    const optionType = option.getAttribute('data-option');
+                    if (optionType === 'envoi') {
+                        francophoneLabel.textContent = 'Montant à recevoir après déduction des frais (9.5%)';
+                        francophoneFraisLabel.textContent = 'Frais de transfert (9.5%)';
+                        montantFrancophoneLabel.textContent = 'Montant à envoyer (XAF):';
+                        francophileFinalLabel.textContent = 'Montant total envoyé';
+                        montantFrancophoneInput.placeholder = 'Ex: 10000';
+                    } else {
+                        francophoneLabel.textContent = 'Montant à recevoir (valeur souhaitée)';
+                        francophoneFraisLabel.textContent = 'Frais de transfert (12% du montant à recevoir)';
+                        montantFrancophoneLabel.textContent = 'Montant à recevoir (XAF):';
+                        francophileFinalLabel.textContent = 'Montant total à envoyer';
+                        montantFrancophoneInput.placeholder = 'Ex: 10100';
+                    }
+                });
+            });
+
+
+            // --- LOGIQUE DU CALCULATEUR POUR GHANA ---
             const form = document.getElementById('transferForm');
             const montantInput = document.getElementById('montant');
             const tauxInput = document.getElementById('taux');
@@ -225,12 +454,9 @@
             const resultat1FraisSpan = document.getElementById('resultat1Frais');
             const resultatFinalSpan = document.getElementById('resultatFinal');
 
-            // Écouter l'événement de soumission du formulaire
             form.addEventListener('submit', (event) => {
-                // Empêcher le rechargement de la page
                 event.preventDefault();
 
-                // 1. Récupérer et valider les valeurs d'entrée
                 const montantInitial = parseFloat(montantInput.value);
                 const tauxPour10000 = parseFloat(tauxInput.value);
 
@@ -239,31 +465,107 @@
                     return;
                 }
 
-                // 2. Effectuer les calculs
-
-                // Calcul du pourcentage de transfère (10.5%)
                 const pourcentagePrincipal = 0.105;
                 const fraisPrincipal = montantInitial * pourcentagePrincipal;
-                
-                // PREMIER RÉSULTAT : Montant du client et montant des frais
                 const montantDuClient = montantInitial - fraisPrincipal;
-                
-                // Calcul du taux pour 1 XAF
                 const tauxPar1 = tauxPour10000 / 10000;
-                
-                // RÉSULTAT FINAL : Calcul de la réception en Ghana Cedis
-                // Basé sur le montant du client
                 const montantReceptionGHS = montantDuClient * tauxPar1;
 
-                // 3. Afficher les résultats dans l'interface
                 resultat1ClientSpan.textContent = montantDuClient.toFixed(2);
                 resultat1FraisSpan.textContent = fraisPrincipal.toFixed(2);
                 resultatFinalSpan.textContent = montantReceptionGHS.toFixed(2);
 
-                // Rendre la section des résultats visible
+                // Afficher uniquement les résultats pour Ghana
+                resultatsContents.forEach(rc => rc.classList.add('hidden'));
+                document.getElementById('ghana-resultats').classList.remove('hidden');
+                
                 resultatsDiv.style.display = 'block';
-
-                // Faire défiler la page en douceur vers les résultats
+                resultatsDiv.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // --- LOGIQUE DU CALCULATEUR POUR AFRIQUE FRANCOPHONE ---
+            const francophoneForm = document.getElementById('francophoneForm');
+            const francophoneMontantSpan = document.getElementById('francophone-montant');
+            const francophoneFraisSpan = document.getElementById('francophone-frais');
+            const francophileFinalSpan = document.getElementById('francophile-final');
+            
+            francophoneForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                
+                const valeurEntree = parseFloat(montantFrancophoneInput.value);
+                const optionActive = document.querySelector('.francophone-option.active').getAttribute('data-option');
+                
+                if (isNaN(valeurEntree) || valeurEntree <= 0) {
+                    alert('Veuillez entrer des valeurs valides et positives.');
+                    return;
+                }
+                
+                let frais, montantRecevoir, montantEnvoyer;
+                
+                if (optionActive === 'envoi') {
+                    // Pour envoyer un montant sans frais de réception: soustraire 9.5% du montant initial
+                    const pourcentage = 0.095;
+                    frais = valeurEntree * pourcentage;
+                    montantEnvoyer = valeurEntree;
+                    montantRecevoir = valeurEntree - frais;
+                } else {
+                    // Pour recevoir un montant avec frais de réception: 
+                    // frais = 12% × montant à recevoir
+                    // montant à envoyer = montant à recevoir + frais
+                    const pourcentage = 0.12;
+                    frais = valeurEntree * pourcentage;
+                    montantRecevoir = valeurEntree;
+                    montantEnvoyer = valeurEntree + frais;
+                }
+                
+                francophoneMontantSpan.textContent = montantRecevoir.toFixed(2);
+                francophoneFraisSpan.textContent = frais.toFixed(2);
+                francophileFinalSpan.textContent = montantEnvoyer.toFixed(2);
+                
+                // Afficher uniquement les résultats pour Afrique Francophone
+                resultatsContents.forEach(rc => rc.classList.add('hidden'));
+                document.getElementById('francophone-resultats').classList.remove('hidden');
+                
+                resultatsDiv.style.display = 'block';
+                resultatsDiv.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // --- LOGIQUE DU CALCULATEUR POUR RESTE DE L'AFRIQUE ---
+            const resteForm = document.getElementById('resteForm');
+            const montantResteInput = document.getElementById('montantReste');
+            const tauxResteInput = document.getElementById('tauxReste');
+            const fraisResteInput = document.getElementById('fraisReste');
+            const resteMontantClientSpan = document.getElementById('reste-montant-client');
+            const resteFraisSpan = document.getElementById('reste-frais');
+            const resteFinalSpan = document.getElementById('reste-final');
+            
+            resteForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                
+                const montantInitial = parseFloat(montantResteInput.value);
+                const tauxPour10000 = parseFloat(tauxResteInput.value);
+                const fraisPourcentage = parseFloat(fraisResteInput.value) / 100;
+                
+                if (isNaN(montantInitial) || isNaN(tauxPour10000) || isNaN(fraisPourcentage) || 
+                    montantInitial <= 0 || tauxPour10000 <= 0 || fraisPourcentage < 0) {
+                    alert('Veuillez entrer des valeurs valides et positives.');
+                    return;
+                }
+                
+                const fraisPrincipal = montantInitial * fraisPourcentage;
+                const montantDuClient = montantInitial - fraisPrincipal;
+                const tauxPar1 = tauxPour10000 / 10000;
+                const montantReception = montantDuClient * tauxPar1;
+                
+                resteMontantClientSpan.textContent = montantDuClient.toFixed(2);
+                resteFraisSpan.textContent = fraisPrincipal.toFixed(2);
+                resteFinalSpan.textContent = montantReception.toFixed(2);
+                
+                // Afficher uniquement les résultats pour Reste de l'Afrique
+                resultatsContents.forEach(rc => rc.classList.add('hidden'));
+                document.getElementById('reste-resultats').classList.remove('hidden');
+                
+                resultatsDiv.style.display = 'block';
                 resultatsDiv.scrollIntoView({ behavior: 'smooth' });
             });
         });
